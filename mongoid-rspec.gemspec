@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 require 'mongoid/rspec/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'mongoid-rspec'
+  s.name        = 'td-mongoid-rspec'
   s.version     = Mongoid::RSpec::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Evan Sagge', 'Rodrigo Pinto']
