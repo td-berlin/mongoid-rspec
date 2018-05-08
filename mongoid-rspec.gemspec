@@ -13,6 +13,8 @@ Gem::Specification.new do |s|
   s.description = 'RSpec matches for Mongoid models, including association and validation matchers.'
   s.license     = 'MIT'
 
+  s.metadata['allowed_push_host'] = 'https://rubygems.td-asp.com'
+
   s.required_ruby_version     = '>= 2.2'
   s.required_rubygems_version = '>= 1.3.6'
   s.rubyforge_project         = 'mongoid-rspec'
