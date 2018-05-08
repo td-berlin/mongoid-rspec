@@ -2,7 +2,6 @@ module Mongoid
   module Matchers
     module Validations
       class ValidateUniquenessOfMatcher < HaveValidationMatcher
-        include WithMessage
         def initialize(field)
           super(field, :uniqueness)
         end
@@ -11,7 +10,7 @@ module Mongoid
           @scope = [scope].flatten.map(&:to_sym)
           self
         end
-        alias_method :scoped_on, :scoped_to
+        alias scoped_on scoped_to
 
         def case_insensitive
           @case_insensitive = true
@@ -29,7 +28,6 @@ module Mongoid
           check_scope if @scope
           check_allow_blank if @allow_blank
           check_case_sensitivity if @case_insensitive
-          check_expected_message if @expected_message
 
           @result
         end
@@ -37,9 +35,8 @@ module Mongoid
         def description
           options_desc = []
           options_desc << " scoped to #{@scope.inspect}" if @scope
-          options_desc << " allowing blank values" if @allow_blank
-          options_desc << " allowing case insensitive values" if @case_insensitive
-          options_desc << " with message '#{@expected_message}'" if @expected_message
+          options_desc << ' allowing blank values' if @allow_blank
+          options_desc << ' allowing case insensitive values' if @case_insensitive
           super << options_desc.to_sentence
         end
 
@@ -47,9 +44,9 @@ module Mongoid
 
         def check_allow_blank
           if @validator.options[:allow_blank] == @allow_blank
-            @positive_result_message << " with blank values allowed"
+            @positive_result_message << ' with blank values allowed'
           else
-            @negative_result_message << " with no blank values allowed"
+            @negative_result_message << ' with no blank values allowed'
             @result = false
           end
         end
@@ -66,9 +63,9 @@ module Mongoid
 
         def check_case_sensitivity
           if @validator.options[:case_sensitive] == false
-            @positive_result_message << " with case insensitive values"
+            @positive_result_message << ' with case insensitive values'
           else
-            @negative_result_message << " without case insensitive values"
+            @negative_result_message << ' without case insensitive values'
             @result = false
           end
         end

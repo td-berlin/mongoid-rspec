@@ -1,11 +1,12 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'mongoid'
+require 'mongoid-compatibility'
 require 'rspec/core'
 require 'rspec/expectations'
 require 'rspec/mocks'
 require 'active_support/core_ext/hash/keys'
-require 'active_support/core_ext/hash/transform_values'
+require 'active_support/core_ext/hash/transform_values' if Mongoid::Compatibility::Version.mongoid4_or_newer?
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/string/inflections'
 
@@ -13,7 +14,6 @@ require 'matchers/associations'
 require 'matchers/allow_mass_assignment'
 require 'matchers/accept_nested_attributes'
 require 'matchers/validations'
-require 'matchers/validations/with_message'
 require 'matchers/validations/associated'
 require 'matchers/validations/confirmation_of'
 require 'matchers/validations/exclusion_of'
@@ -29,7 +29,12 @@ require 'matchers/be_mongoid_document'
 require 'matchers/be_dynamic_document'
 require 'matchers/be_stored_in'
 require 'matchers/have_field'
-require 'matchers/have_index_for'
+require 'matchers/indexes/have_index_for'
+if Mongoid::Compatibility::Version.mongoid3?
+  require 'matchers/indexes/v3/have_index_for'
+else
+  require 'matchers/indexes/v4/have_index_for'
+end
 require 'matchers/have_timestamps'
 
 module Mongoid

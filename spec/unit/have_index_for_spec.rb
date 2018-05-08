@@ -7,11 +7,11 @@ RSpec.describe Mongoid::Matchers::HaveIndexFor do
 
       field :fizz, as: :buzz, type: String
 
-      index({ foo: 1 })
-      index({ bar: 1 }, { unique: true, background: true, drop_dups: true })
-      index({ foo: 1, bar: -1 })
-      index({ 'baz._id' => 1 })
-      index({ buzz: 1 })
+      index(foo: 1)
+      index({ bar: 1 }, unique: true, background: true, drop_dups: true)
+      index(foo: 1, bar: -1)
+      index('baz._id' => 1)
+      index(buzz: 1)
     end
   end
 
@@ -41,6 +41,6 @@ RSpec.describe Mongoid::Matchers::HaveIndexFor do
 
   it 'detect an index for aliased fields' do
     is_expected.to have_index_for(fizz: 1)
-    is_expected.to have_index_for(buzz: 1)
+    is_expected.to have_index_for(buzz: 1) if Mongoid::Compatibility::Version.mongoid4_or_newer?
   end
 end
